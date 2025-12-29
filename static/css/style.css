@@ -917,6 +917,113 @@ html {
     }
 }
 
+/* ==========================================
+   CONTACT FORM ENHANCEMENTS - Turn 1
+   ========================================== */
+
+/* Contact form styling */
+#contactForm .form-control {
+    border: 1.5px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+#contactForm .form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+    background-color: var(--bg-secondary);
+}
+
+#contactForm .form-label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 15px;
+    color: var(--text-primary);
+}
+
+/* Form icons styling */
+#contactForm .form-label i {
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+/* Character counter styling */
+#charCount {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* Invalid feedback styling */
+.invalid-feedback {
+    color: #dc3545;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5px;
+    display: block !important;
+}
+
+/* Submit button styling */
+.contact-submit-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    border: none;
+    font-weight: 600;
+    padding: 14px 32px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+    border-radius: 8px;
+}
+
+.contact-submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+    background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+}
+
+.contact-submit-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+.contact-submit-btn .spinner-border {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+}
+
+/* Form container styling */
+#contactForm .row {
+    margin-bottom: 0;
+}
+
+/* Privacy note styling */
+#contactForm .text-muted {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+#contactForm .text-muted i {
+    color: var(--primary-color);
+}
+
+/* Alert animations */
+.alert {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Print Styles */
 @media print {
     .navbar,
