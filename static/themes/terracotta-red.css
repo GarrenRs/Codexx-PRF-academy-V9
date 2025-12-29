@@ -1,0 +1,31 @@
+/* ==========================================
+   THEME: TERRACOTTA RED (Warm & Modern)
+   ========================================== */
+
+:root[data-portfolio-theme="terracotta-red"],
+html[data-portfolio-theme="terracotta-red"] {
+    --primary-color: #C1440E;
+    --primary-dark: #A83609;
+    --primary-light: #E86A3C;
+    --secondary-color: #8B2E0B;
+    --accent-color: #F4A373;
+    --gold-gradient: linear-gradient(135deg, #C1440E 0%, #E86A3C 50%, #A83609 100%);
+    --text-primary: #3D1F0A;
+    --text-secondary: #6B3D25;
+    --bg-primary: #faf7f2;
+    --bg-secondary: #f0e8df;
+    --border-color: #e0d0bb;
+    --shadow: 0 0.5rem 1rem rgba(193, 68, 14, 0.15);
+    --shadow-lg: 0 1rem 3rem rgba(193, 68, 14, 0.25);
+    --navbar-bg: rgba(61, 31, 10, 0.95);
+}
+
+html[data-portfolio-theme="terracotta-red"][data-theme="dark"] {
+    --text-primary: #ffffff;
+    --text-secondary: #f0d5bf;
+    --bg-primary: #1a0f06;
+    --bg-secondary: #2d1a0e;
+    --border-color: #5c3821;
+    --shadow: 0 0.5rem 1rem rgba(193, 68, 14, 0.3);
+    --shadow-lg: 0 1rem 3rem rgba(193, 68, 14, 0.4);
+}

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en" data-portfolio-theme="{{ current_theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ data.description or 'Professional portfolio showcasing skills, projects, and expertise in web development & design' }}">
+    <meta name="keywords" content="portfolio, {{ data.name or 'developer' }}, web developer, designer, projects, skills, freelance">
+    <meta name="author" content="{{ data.name or 'Codexx' }}">
+    <meta name="theme-color" content="#D4AF37">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.url_root.rstrip('/') }}">
+    <meta property="og:title" content="{{ data.name or 'Codexx' }} - Professional Portfolio">
+    <meta property="og:description" content="{{ data.description or 'Premium Web Development & Design Solutions' }}">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="{{ request.url_root.rstrip('/') }}/static/logo/codexx-logo.png">
+    <meta property="og:url" content="{{ request.url_root.rstrip('/') }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ data.name or 'Codexx' }} - Professional Portfolio">
+    <meta name="twitter:description" content="{{ data.description or 'Premium Web Development & Design Solutions' }}">
+    <meta name="twitter:image" content="{{ request.url_root.rstrip('/') }}/static/logo/codexx-logo.png">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='logo/codexx-logo.png') }}">
+    <title>{{ data.name or 'Codexx' }} - Professional Portfolio</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/' + current_theme + '.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-portfolio-theme="{{ current_theme }}">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#home">
+                <img src="{{ url_for('static', filename='logo/codexx-logo.png') }}" alt="Codexx Logo" height="45" class="me-2">
+                <span>Codexx</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#projects">Projects</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <button class="btn btn-outline-light btn-sm ms-2" id="themeToggle">
+                            <i class="fas fa-moon" id="themeIcon"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section d-flex align-items-center min-vh-100">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h4 class="hero-subtitle mb-3">Hello, I'm</h4>
+                        <h1 class="hero-title mb-4">{{ data.name or 'Your Name Here' }}</h1>
+                        <h3 class="hero-description mb-4">{{ data.title or 'Web Developer' }}</h3>
+                        <p class="hero-text mb-5">{{ data.description or 'I am a web developer specializing in creating modern websites and applications' }}</p>
+                        <div class="hero-buttons">
+                            <a href="#contact" class="btn btn-primary btn-lg me-3">
+                                <i class="fas fa-envelope me-2"></i>Get In Touch
+                            </a>
+                            <a href="#projects" class="btn btn-outline-primary btn-lg">
+                                <i class="fas fa-eye me-2"></i>View My Work
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image text-center">
+                        <img src="{{ data.photo or url_for('static', filename='assets/profile-placeholder.svg') }}" alt="Profile" class="img-fluid rounded-circle shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <a href="#about">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">
+        <i class="divider-icon fas fa-star"></i>
+    </div>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">About Me</h2>
+                    <p class="section-subtitle">Get to know me better</p>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="about-image">
+                        <img src="{{ data.photo or url_for('static', filename='assets/profile-placeholder.svg') }}" alt="About Me" class="img-fluid rounded shadow">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-content">
+                        <h3 class="mb-4">{{ data.name or 'Your Name Here' }}</h3>
+                        <p class="mb-4">{{ data.about or 'A detailed personal profile about you, your skills and experience in web development' }}</p>
+                        <div class="row mb-4">
+                            <div class="col-6">
+                                <ul class="list-unstyled">
+                                    <li><strong>Name:</strong> {{ data.name or 'Your Name' }}</li>
+                                    <li><strong>Specialization:</strong> {{ data.title or 'Your Specialization' }}</li>
+                                    <li><strong>Location:</strong> {{ data.contact.location if data.contact else 'Your Location' }}</li>
+                                </ul>
+                            </div>
+                            <div class="col-6">
+                                <ul class="list-unstyled">
+                                    <li><strong>Email:</strong> {{ data.contact.email if data.contact else 'Your Email' }}</li>
+                                    <li><strong>Phone:</strong> {{ data.contact.phone if data.contact else 'Your Phone' }}</li>
+                                    <li><strong>Projects:</strong> {{ data.projects|length if data.projects else 0 }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <a href="{{ url_for('cv_preview') }}" class="btn btn-primary">
+                            <i class="fas fa-eye me-2"></i>Preview CV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">
+        <i class="divider-icon fas fa-code"></i>
+    </div>
+
+    <!-- Skills Section -->
+    <section id="skills" class="section-padding bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">My Skills</h2>
+                    <p class="section-subtitle">Technologies I work with</p>
+                </div>
+            </div>
+            <div class="row">
+                {% if data.skills %}
+                    {% for skill in data.skills %}
+                        <div class="col-lg-6 mb-4">
+                            <div class="skill-item">
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span class="skill-name">{{ skill.name }}</span>
+                                    <span class="skill-percentage">{{ skill.level }}%</span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: {{ skill.level }}%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No skills added yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Divider -->
+    <div class="section-divider">
+        <i class="divider-icon fas fa-lightbulb"></i>
+    </div>
+
+    <!-- Projects Section -->
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">My Projects</h2>
+                    <p class="section-subtitle">Recent work and achievements</p>
+                </div>
+            </div>
+            <div class="row">
+                {% if data.projects %}
+                    {% for project in data.projects %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="project-card h-100" onclick="window.location.href='{{ url_for('project_detail', project_id=project.id) }}'" style="cursor: pointer;">
+                            <div class="project-image">
+                                {% if project.image and project.image.startswith('static/') %}
+                                    <img src="{{ url_for('static', filename=project.image.replace('static/', '')) }}" alt="{{ project.title }}">
+                                {% else %}
+                                    <img src="{{ project.image or url_for('static', filename='assets/project-placeholder.svg') }}" alt="{{ project.title }}">
+                                {% endif %}
+                                <div class="project-overlay">
+                                    <div class="text-center">
+                                        <div class="btn btn-light me-2">
+                                            <i class="fas fa-eye"></i>
+                                            View Details
+                                        </div>
+                                        {% if project.demo_url and project.demo_url != '#' %}
+                                            <a href="{{ project.demo_url }}" target="_blank" class="btn btn-light me-2" onclick="event.stopPropagation();">
+                                                <i class="fas fa-external-link-alt"></i>
+                                            </a>
+                                        {% endif %}
+                                        {% if project.github_url and project.github_url != '#' %}
+                                            <a href="{{ project.github_url }}" target="_blank" class="btn btn-light" onclick="event.stopPropagation();">
+                                                <i class="fab fa-github"></i>
+                                            </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="project-content">
+                                <h5>{{ project.title }}</h5>
+                                <p>{{ project.short_description or project.description }}</p>
+                                {% if project.technologies %}
+                                    <div class="project-tech">
+                                        {% for tech in project.technologies %}
+                                            <span class="badge bg-primary me-1 mb-1">{{ tech }}</span>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12 text-center">
+                        <p class="text-muted">No projects added yet</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section Divider -->
+    <div class="section-divider">
+        <i class="divider-icon fas fa-paper-plane"></i>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="section-subtitle">Let's work together on your next project</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <form action="{{ url_for('contact') }}" method="POST">
+                            <!-- Honeypot field (hidden from real users) -->
+                            <input type="text" name="website" style="display: none; position: absolute; left: -9999px;" tabindex="-1" autocomplete="off">
+                            
+                            <!-- Hidden field for portfolio owner (extracted from URL or default to admin) -->
+                            <input type="hidden" name="portfolio_owner" id="portfolio_owner" value="{{ data.name or '' }}">
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="name" class="form-label">Name *</label>
+                                    <input type="text" class="form-control" id="name" name="name" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="email" class="form-label">Email *</label>
+                                    <input type="email" class="form-control" id="email" name="email" required>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="message" class="form-label">Message *</label>
+                                <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Send Message
+                            </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col-lg-12">
+                    <div class="contact-info text-center">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="contact-item">
+                                    <i class="fas fa-envelope fa-2x mb-3"></i>
+                                    <h5>Email</h5>
+                                    <p>{{ data.contact.email if data.contact and data.contact.email else 'Your Email' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="contact-item">
+                                    <i class="fas fa-phone fa-2x mb-3"></i>
+                                    <h5>Phone</h5>
+                                    <p>{{ data.contact.phone if data.contact and data.contact.phone else '+1 (555) 123-4567' }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="contact-item">
+                                    <i class="fas fa-map-marker-alt fa-2x mb-3"></i>
+                                    <h5>Location</h5>
+                                    <p>{{ data.contact.location if data.contact and data.contact.location else 'Your Location' }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <p class="mb-0">&copy; 2026 Codexx. All rights reserved. | Premium Digital Solutions</p>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="social-links">
+                            {% if data.social %}
+                                {% if data.social.linkedin and data.social.linkedin != '' %}
+                                    <a href="{{ data.social.linkedin }}" class="social-link" target="_blank" rel="noopener noreferrer" title="LinkedIn">
+                                        <i class="fab fa-linkedin"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.github and data.social.github != '' %}
+                                    <a href="{{ data.social.github }}" class="social-link" target="_blank" rel="noopener noreferrer" title="GitHub">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.twitter and data.social.twitter != '' %}
+                                    <a href="{{ data.social.twitter }}" class="social-link" target="_blank" rel="noopener noreferrer" title="Twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.instagram and data.social.instagram != '' %}
+                                    <a href="{{ data.social.instagram }}" class="social-link" target="_blank" rel="noopener noreferrer" title="Instagram">
+                                        <i class="fab fa-instagram"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.facebook and data.social.facebook != '' %}
+                                    <a href="{{ data.social.facebook }}" class="social-link" target="_blank" rel="noopener noreferrer" title="Facebook">
+                                        <i class="fab fa-facebook"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.youtube and data.social.youtube != '' %}
+                                    <a href="{{ data.social.youtube }}" class="social-link" target="_blank" rel="noopener noreferrer" title="YouTube">
+                                        <i class="fab fa-youtube"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.behance and data.social.behance != '' %}
+                                    <a href="{{ data.social.behance }}" class="social-link" target="_blank" rel="noopener noreferrer" title="Behance">
+                                        <i class="fab fa-behance"></i>
+                                    </a>
+                                {% endif %}
+                                {% if data.social.dribbble and data.social.dribbble != '' %}
+                                    <a href="{{ data.social.dribbble }}" class="social-link" target="_blank" rel="noopener noreferrer" title="Dribbble">
+                                        <i class="fab fa-dribbble"></i>
+                                    </a>
+                                {% endif %}
+                            {% else %}
+                                <!-- Default social links if no data -->
+                                <a href="#" class="social-link" title="LinkedIn">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="#" class="social-link" title="GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="social-link" title="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="social-link" title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

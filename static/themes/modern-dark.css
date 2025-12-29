@@ -1,0 +1,31 @@
+/* ==========================================
+   THEME: MODERN DARK (Tech & Trendy)
+   ========================================== */
+
+:root[data-portfolio-theme="modern-dark"],
+html[data-portfolio-theme="modern-dark"] {
+    --primary-color: #00D9FF;
+    --primary-dark: #00A8CC;
+    --primary-light: #00F0FF;
+    --secondary-color: #0066CC;
+    --accent-color: #00FFFF;
+    --gold-gradient: linear-gradient(135deg, #00D9FF 0%, #00F0FF 50%, #0066CC 100%);
+    --text-primary: #ffffff;
+    --text-secondary: #c0c0d0;
+    --bg-primary: #0a0a18;
+    --bg-secondary: #121230;
+    --border-color: #1f1f4a;
+    --shadow: 0 0.5rem 1rem rgba(0, 217, 255, 0.15);
+    --shadow-lg: 0 1rem 3rem rgba(0, 217, 255, 0.25);
+    --navbar-bg: rgba(10, 10, 24, 0.95);
+}
+
+html[data-portfolio-theme="modern-dark"][data-theme="dark"] {
+    --text-primary: #ffffff;
+    --text-secondary: #b8b8d0;
+    --bg-primary: #060612;
+    --bg-secondary: #0f0f24;
+    --border-color: #1a1a3f;
+    --shadow: 0 0.5rem 1rem rgba(0, 217, 255, 0.2);
+    --shadow-lg: 0 1rem 3rem rgba(0, 217, 255, 0.3);
+}

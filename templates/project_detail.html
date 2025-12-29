@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-portfolio-theme="{{ current_theme }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ project.title }} - Portfolio</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/' + current_theme + '.css') }}">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .project-hero {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            padding: 120px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Dark theme improvements for project detail */
+        [data-theme="dark"] .project-hero {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        [data-theme="dark"] .project-meta,
+        [data-theme="dark"] .project-description {
+            background-color: var(--bg-secondary) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-primary) !important;
+        }
+
+        [data-theme="dark"] .tech-badge {
+            background-color: var(--primary-color) !important;
+            color: #ffffff !important;
+        }
+
+        .project-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><polygon fill="%236c63ff" fill-opacity="0.05" points="0,0 1000,300 1000,1000 0,700"/></svg>');
+            z-index: -1;
+        }
+
+        .project-image-container {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            margin-bottom: 2rem;
+        }
+
+        .project-image-container img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-meta {
+            background: var(--bg-primary);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0.25rem;
+            box-shadow: 0 2px 10px rgba(108, 99, 255, 0.2);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-demo {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
+        }
+
+        .btn-demo:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
+        }
+
+        .btn-github {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-github:hover {
+            background: #333;
+            color: white;
+            border-color: #333;
+            transform: translateY(-3px);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-primary);
+            padding: 10px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .project-description {
+            background: var(--bg-primary);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+
+        .project-content-formatted {
+            line-height: 2;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .project-content-formatted p {
+            margin-bottom: 1.8rem;
+            text-align: justify;
+            text-indent: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .project-content-formatted p:first-of-type {
+            font-size: 1.15rem;
+            font-weight: 500;
+            color: var(--text-primary);
+            text-indent: 0;
+            margin-bottom: 2rem;
+        }
+
+        .project-content-formatted h1,
+        .project-content-formatted h2,
+        .project-content-formatted h3,
+        .project-content-formatted h4 {
+            color: var(--text-primary);
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-content-formatted h1 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .project-content-formatted h2 {
+            font-size: 1.5rem;
+        }
+
+        .project-content-formatted h3 {
+            font-size: 1.3rem;
+        }
+
+        .project-content-formatted ul,
+        .project-content-formatted ol {
+            margin: 1.5rem 0;
+            padding-left: 2rem;
+        }
+
+        .project-content-formatted li {
+            margin-bottom: 0.8rem;
+            line-height: 1.7;
+        }
+
+        .project-content-formatted ul li {
+            list-style-type: none;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .project-content-formatted ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .project-content-formatted strong,
+        .project-content-formatted b {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* تحسين عرض الفقرات الطويلة */
+        .project-content-formatted {
+            font-family: 'Poppins', sans-serif;
+            letter-spacing: 0.3px;
+        }
+
+        /* إضافة مسافة بين الأسطر */
+        .project-content-formatted br {
+            display: block;
+            margin: 1rem 0;
+            content: "";
+        }
+
+        /* تنسيق خاص للنص العادي */
+        .project-content-formatted:not(:has(h1, h2, h3, h4, h5, h6, ul, ol)) {
+            text-align: justify;
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, transparent, var(--bg-secondary) 10%, var(--bg-secondary) 90%, transparent);
+            border-radius: 8px;
+        }
+
+        .project-content-formatted code {
+            background: var(--bg-secondary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+
+        .project-content-formatted pre {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary-color);
+            margin: 1.5rem 0;
+        }
+
+        .project-content-formatted pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .project-content-formatted blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .project-content-formatted a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px dotted var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .project-content-formatted a:hover {
+            color: var(--secondary-color);
+            border-bottom-style: solid;
+        }
+
+        .project-content-formatted hr {
+            border: none;
+            border-top: 2px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        .project-content-formatted img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .project-content-formatted table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .project-content-formatted table th,
+        .project-content-formatted table td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .project-content-formatted table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* تحسينات الوضع الداكن */
+        [data-theme="dark"] .project-content-formatted {
+            color: #d1d5db !important;
+        }
+
+        [data-theme="dark"] .project-content-formatted p {
+            color: #d1d5db !important;
+        }
+
+        [data-theme="dark"] .project-content-formatted p:first-of-type {
+            color: #ffffff !important;
+        }
+
+        [data-theme="dark"] .project-content-formatted strong,
+        [data-theme="dark"] .project-content-formatted b {
+            color: #ffffff !important;
+        }
+
+        .section-title-small {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-hero {
+                padding: 100px 0 60px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .action-btn {
+                min-width: auto;
+            }
+
+            .project-meta,
+            .project-description {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-code me-2 text-primary"></i>Codexx
+            </a>
+
+            <div class="d-flex align-items-center">
+                <a href="{{ url_for('index') }}" class="back-btn me-3">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Home
+                </a>
+
+                <button class="btn btn-outline-light" id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Project Hero Section -->
+    <section class="project-hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-4 fw-bold text-primary mb-3">{{ project.title }}</h1>
+                    <p class="lead text-muted mb-4">{{ project.short_description or project.description }}</p>
+
+                    <div class="action-buttons">
+                        {% if project.demo_url and project.demo_url != '#' %}
+                        <a href="{{ project.demo_url }}" target="_blank" class="action-btn btn-demo">
+                            <i class="fas fa-eye"></i>
+                            View Demo
+                        </a>
+                        {% endif %}
+
+                        {% if project.github_url and project.github_url != '#' %}
+                        <a href="{{ project.github_url }}" target="_blank" class="action-btn btn-github">
+                            <i class="fab fa-github"></i>
+                            Source Code
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <!-- Project Image -->
+                <div class="col-lg-8">
+                    <div class="project-image-container">
+                        {% if project.image and project.image.startswith('static/') %}
+                            <img src="{{ url_for('static', filename=project.image.replace('static/', '')) }}" 
+                                 alt="{{ project.title }}" 
+                                 class="img-fluid">
+                        {% else %}
+                            <img src="{{ project.image or url_for('static', filename='assets/project-placeholder.svg') }}" 
+                                 alt="{{ project.title }}" 
+                                 class="img-fluid">
+                        {% endif %}
+                    </div>
+
+                    <!-- Project Description -->
+                    <div class="project-description">
+                        <h3 class="section-title-small">
+                            <i class="fas fa-info-circle text-primary"></i>
+                            Project Description
+                        </h3>
+                        <div class="project-content-formatted">
+                            {{ (project.content or project.description)|safe }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Meta -->
+                <div class="col-lg-4">
+                    <div class="project-meta">
+                        <h4 class="section-title-small">
+                            <i class="fas fa-tools text-primary"></i>
+                            Technologies Used
+                        </h4>
+
+                        {% if project.technologies %}
+                            <div class="mb-4">
+                                {% for tech in project.technologies %}
+                                    <span class="tech-badge">{{ tech }}</span>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted">No technologies specified</p>
+                        {% endif %}
+
+                        <h5 class="section-title-small">
+                            <i class="fas fa-link text-primary"></i>
+                            Links
+                        </h5>
+
+                        <div class="d-grid gap-2">
+                            {% if project.demo_url and project.demo_url != '#' %}
+                            <a href="{{ project.demo_url }}" target="_blank" class="btn btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-2"></i>
+                                Project Link
+                            </a>
+                            {% endif %}
+
+                            {% if project.github_url and project.github_url != '#' %}
+                            <a href="{{ project.github_url }}" target="_blank" class="btn btn-outline-dark">
+                                <i class="fab fa-github me-2"></i>
+                                Code Repository
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Related Projects -->
+                    {% if data.projects and data.projects|length > 1 %}
+                    <div class="project-meta">
+                        <h5 class="section-title-small">
+                            <i class="fas fa-folder text-primary"></i>
+                            Other Projects
+                        </h5>
+
+                        {% for other_project in data.projects %}
+                            {% if other_project.id != project.id %}
+                            <div class="d-flex align-items-center mb-3 p-2 border rounded">
+                                {% if other_project.image and other_project.image.startswith('static/') %}
+                                    <img src="{{ url_for('static', filename=other_project.image.replace('static/', '')) }}" 
+                                         alt="{{ other_project.title }}" 
+                                         class="rounded me-3" 
+                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                {% else %}
+                                    <img src="{{ other_project.image or url_for('static', filename='assets/project-placeholder.svg') }}" 
+                                         alt="{{ other_project.title }}" 
+                                         class="rounded me-3" 
+                                         style="width: 50px; height: 50px; object-fit: cover;">
+                                {% endif %}
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0">
+                                        <a href="{{ url_for('project_detail', project_id=other_project.id) }}" 
+                                           class="text-decoration-none">
+                                            {{ other_project.title }}
+                                        </a>
+                                    </h6>
+                                    <small class="text-muted">{{ (other_project.short_description or other_project.description)[:50] }}...</small>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-section py-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 Codexx. All rights reserved. | Premium Digital Solutions</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="{{ url_for('index') }}#projects" class="btn btn-outline-primary">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

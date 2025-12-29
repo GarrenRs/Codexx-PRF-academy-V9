@@ -1,0 +1,692 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-portfolio-theme="luxury-gold">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Comprehensive feature catalog for Portfolio Platform Pro - Professional portfolio management platform">
+    <meta name="keywords" content="portfolio, management, features, catalog">
+    <title>Feature Catalog - Portfolio Platform Pro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='themes/luxury-gold.css') }}">
+    <style>
+        :root {
+            --primary-gold: #D4AF37;
+            --text-light: #f0f0f0;
+            --bg-dark: #0a0a0a;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #FFD700 50%, #B8941F 100%);
+        }
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+        }
+        
+        .animated-bg span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-gold);
+            animation: float 15s infinite;
+            border-radius: 50%;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        /* Navbar */
+        .navbar {
+            background: rgba(10, 10, 10, 0.98) !important;
+            border-bottom: 3px solid var(--primary-gold);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .navbar-brand {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--gold-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after {
+            width: 80%;
+        }
+        
+        /* Hero Section */
+        .catalog-hero {
+            background: var(--gold-gradient);
+            padding: 100px 0 80px;
+            color: #000;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .catalog-hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        .catalog-hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .catalog-hero p {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            font-weight: 600;
+            animation: fadeInUp 1s ease;
+        }
+        
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border: 2px solid var(--primary-gold);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+        
+        .stat-box:hover::before {
+            transform: rotate(90deg);
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 40px rgba(212, 175, 55, 0.4);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            margin-top: 10px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Feature Section */
+        .feature-section {
+            margin-bottom: 100px;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 25px;
+            border-bottom: 3px solid var(--primary-gold);
+            position: relative;
+        }
+        
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100px;
+            height: 3px;
+            background: #fff;
+            animation: slideRight 2s ease-in-out infinite;
+        }
+        
+        @keyframes slideRight {
+            0%, 100% { left: 0; }
+            50% { left: calc(100% - 100px); }
+        }
+        
+        .section-header i {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            margin-right: 20px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .section-header h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+        
+        /* Feature Card */
+        .feature-card {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.02));
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .feature-card:hover::before {
+            left: 100%;
+        }
+        
+        .feature-card:hover {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.08));
+            border-color: var(--primary-gold);
+            transform: translateX(10px);
+            box-shadow: -5px 5px 30px rgba(212, 175, 55, 0.3);
+        }
+        
+        .feature-title {
+            color: var(--primary-gold);
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feature-desc {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+        
+        .badge-custom {
+            display: inline-block;
+            background: var(--gold-gradient);
+            color: #000;
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-right: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(10, 10, 10, 0.98);
+            border-top: 3px solid var(--primary-gold);
+            padding: 50px 0;
+            margin-top: 100px;
+        }
+        
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: var(--gold-gradient);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .catalog-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .section-header i {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <span style="left: 10%; animation-delay: 0s;"></span>
+        <span style="left: 20%; animation-delay: 2s;"></span>
+        <span style="left: 30%; animation-delay: 4s;"></span>
+        <span style="left: 40%; animation-delay: 1s;"></span>
+        <span style="left: 50%; animation-delay: 3s;"></span>
+        <span style="left: 60%; animation-delay: 5s;"></span>
+        <span style="left: 70%; animation-delay: 2.5s;"></span>
+        <span style="left: 80%; animation-delay: 4.5s;"></span>
+        <span style="left: 90%; animation-delay: 1.5s;"></span>
+    </div>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="/dashboard">
+                <i class="fas fa-book-open me-2"></i>
+                Feature Catalog
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#core">Core Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#notification">Notifications</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#backup">Backup</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#seo">SEO & Security</a></li>
+                </ul>
+                <a href="/dashboard" class="btn btn-sm ms-3" style="background: var(--gold-gradient); color: #000; border-radius: 25px; font-weight: 700; padding: 8px 20px;">
+                    <i class="fas fa-arrow-left me-2"></i>Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div style="padding-top: 80px;">
+        <!-- Hero Section -->
+        <div class="catalog-hero">
+            <h1>📚 Comprehensive Feature Catalog</h1>
+            <p>Discover all capabilities and features of Portfolio Platform Pro</p>
+        </div>
+
+        <div class="container" style="padding-bottom: 80px;">
+            <!-- Statistics -->
+            <div class="stats-grid mb-5">
+                <div class="stat-box">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Professional Templates</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Client Management Stages</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Notification Systems</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">SEO Optimized</div>
+                </div>
+            </div>
+
+            <!-- Core Features -->
+            <div class="feature-section" id="core">
+                <div class="section-header">
+                    <i class="fas fa-star"></i>
+                    <h2>Core Features</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📱 6 Premium Professional Templates</div>
+                            <div class="badge-custom">User Interface</div>
+                            <div class="feature-desc">Luxury Gold, Modern Dark, Clean Light, Terracotta Red, Vibrant Green, Silver Grey - Each with unique design and full dark mode support</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🌙 Advanced Dark Mode Support</div>
+                            <div class="badge-custom">Accessibility</div>
+                            <div class="feature-desc">Complete toggle between dark and light modes across all templates with smooth transitions and automatic preference saving</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">👥 Client Management CRM System</div>
+                            <div class="badge-custom">Client Management</div>
+                            <div class="feature-desc">4-stage workflow: Lead ← Negotiation ← In Progress ← Completed with automatic status tracking and revenue calculations</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">💼 Comprehensive Client Management</div>
+                            <div class="badge-custom">Database</div>
+                            <div class="feature-desc">Complete client database including contact info, project details, pricing, deadlines, notes and activity history</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📊 Advanced Analytics Dashboard</div>
+                            <div class="badge-custom">Analytics</div>
+                            <div class="feature-desc">Real-time statistics on clients, projects, revenue, visitor tracking and comprehensive performance metrics</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📸 Portfolio Management</div>
+                            <div class="badge-custom">Content</div>
+                            <div class="feature-desc">Create, edit, and manage portfolio projects with descriptions, technologies used, images and live demos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications -->
+            <div class="feature-section" id="notification">
+                <div class="section-header">
+                    <i class="fas fa-bell"></i>
+                    <h2>Smart Notification Systems</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📧 SMTP Email Notifications</div>
+                            <div class="badge-custom">Email</div>
+                            <div class="feature-desc">Custom SMTP configuration for sending formatted HTML emails. Automatic notifications for contact forms, client updates and system events</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 Telegram Bot Integration</div>
+                            <div class="badge-custom">Instant Messaging</div>
+                            <div class="feature-desc">Instant Telegram notifications for new clients, client status changes, contact forms and system alerts</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🧪 Built-in Connection Testing</div>
+                            <div class="badge-custom">Utilities</div>
+                            <div class="feature-desc">Integrated test function for email and Telegram to verify settings before activation</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">⚙️ Notification Settings Panel</div>
+                            <div class="badge-custom">Configuration</div>
+                            <div class="feature-desc">Easy-to-use settings panel to configure SMTP credentials and Telegram bot tokens with secure storage</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Backup System -->
+            <div class="feature-section" id="backup">
+                <div class="section-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h2>Backup & Recovery System</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🕐 Hourly Automatic Backups</div>
+                            <div class="badge-custom">Automation</div>
+                            <div class="feature-desc">APScheduler scheduled system that creates automatic backups every hour with metadata tracking and version history</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">💾 Manual Backup Creation</div>
+                            <div class="badge-custom">Data Management</div>
+                            <div class="feature-desc">Create on-demand backups at any time with one click from dashboard settings</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">↩️ Safe Data Restoration</div>
+                            <div class="badge-custom">Recovery</div>
+                            <div class="feature-desc">Restore previous backups with automatic safety backup creation before restoration to prevent data loss</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📥 Download & Delete Backups</div>
+                            <div class="badge-custom">File Management</div>
+                            <div class="feature-desc">Download backups for offline storage or permanently delete old backups to save space</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🗂️ Backup History Log</div>
+                            <div class="badge-custom">Tracking</div>
+                            <div class="feature-desc">View complete backup history with timestamps, file sizes and restoration options via dropdown menus</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🎯 Keep Last 20 Backups</div>
+                            <div class="badge-custom">Storage</div>
+                            <div class="feature-desc">Automatic cleanup that keeps only the last 20 backups to optimize storage while maintaining sufficient history</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEO & Security -->
+            <div class="feature-section" id="seo">
+                <div class="section-header">
+                    <i class="fas fa-lock"></i>
+                    <h2>SEO Optimization & Security</h2>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🔍 Optimized Meta Tags</div>
+                            <div class="badge-custom">SEO</div>
+                            <div class="feature-desc">Complete implementation of meta tags including description, keywords, author and theme color for search engine optimization</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📱 Open Graph & Twitter Cards</div>
+                            <div class="badge-custom">Social Media</div>
+                            <div class="feature-desc">Dynamic Open Graph and Twitter Card tags for optimal sharing on social media platforms with rich previews</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🗺️ Dynamic Sitemap</div>
+                            <div class="badge-custom">SEO</div>
+                            <div class="feature-desc">Auto-generated sitemap.xml for all portfolio pages and projects with proper XML formatting for search engines</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🤖 Robots.txt File</div>
+                            <div class="badge-custom">SEO</div>
+                            <div class="feature-desc">Search engine crawler instructions with proper rules for portfolio indexing and admin area exclusion</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🔒 Favicon Support</div>
+                            <div class="badge-custom">Branding</div>
+                            <div class="feature-desc">Multiple favicon format support (SVG, PNG, ICO) with browser compatibility and proper cache headers</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">🛡️ Security Headers</div>
+                            <div class="badge-custom">Security</div>
+                            <div class="feature-desc">Secure cookies with HttpOnly and SameSite and proper CSRF protection for user data safety</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">⏱️ Rate Limiting</div>
+                            <div class="badge-custom">Protection</div>
+                            <div class="feature-desc">IP-based rate limiting to prevent spam and abuse on contact forms and public endpoints</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="feature-card">
+                            <div class="feature-title">📊 IP Activity Logging</div>
+                            <div class="badge-custom">Security</div>
+                            <div class="feature-desc">Track visitor IP addresses, bot detection via honeypot fields and security event logging for monitoring</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container text-center">
+            <p style="margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 1.1rem;">
+                Portfolio Platform Pro &copy; 2025 | All Rights Reserved
+            </p>
+            <p style="margin-top: 15px; font-size: 1rem; color: rgba(212, 175, 55, 0.9);">
+                <i class="fas fa-star" style="color: var(--primary-gold);"></i>
+                Premium Professional Portfolio Management System
+            </p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Scroll Progress Bar
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (window.scrollY / scrollHeight) * 100;
+            scrollProgress.style.width = scrolled + '%';
+        });
+        
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.feature-card, .stat-box').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

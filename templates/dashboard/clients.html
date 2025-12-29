@@ -1,0 +1,221 @@
+{% extends "dashboard/base.html" %}
+{% block title %}Clients - Dashboard{% endblock %}
+{% block page_title %}Clients Management{% endblock %}
+
+{% block content %}
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card" style="background: linear-gradient(135deg, rgba(212, 175, 55, 0.2), rgba(184, 148, 31, 0.1));">
+            <div class="card-body text-center">
+                <i class="fas fa-users fa-2x mb-2" style="color: var(--primary-gold);"></i>
+                <h5 style="color: var(--primary-gold);">Total Clients</h5>
+                <h3 style="color: var(--text-light);">{{ stats.total }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.1));">
+            <div class="card-body text-center">
+                <i class="fas fa-check-circle fa-2x mb-2" style="color: #10b981;"></i>
+                <h5 style="color: #10b981;">Active Projects</h5>
+                <h3 style="color: var(--text-light);">{{ stats.active }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card" style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.1));">
+            <div class="card-body text-center">
+                <i class="fas fa-clock fa-2x mb-2" style="color: #3b82f6;"></i>
+                <h5 style="color: #3b82f6;">Pending</h5>
+                <h3 style="color: var(--text-light);">{{ stats.pending }}</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-3">
+        <div class="card" style="background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(124, 58, 237, 0.1));">
+            <div class="card-body text-center">
+                <i class="fas fa-dollar-sign fa-2x mb-2" style="color: #8b5cf6;"></i>
+                <h5 style="color: #8b5cf6;">Total Revenue</h5>
+                <h3 style="color: var(--text-light);">${{ "%.2f"|format(stats.revenue) }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Clients Table -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    <i class="fas fa-users me-2"></i>Clients & Projects
+                </h5>
+                <a href="{{ url_for('dashboard_add_client') }}" class="btn btn-sm" style="background: var(--gold-gradient); color: #000000; font-weight: 600; border-radius: 8px;">
+                    <i class="fas fa-plus me-1"></i>Add New Client
+                </a>
+            </div>
+            <div class="card-body">
+                {% if clients %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead style="background: var(--gold-gradient);">
+                            <tr>
+                                <th style="color: #000000 !important; font-weight: 600;">#</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Client Name</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Contact</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Project</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Status</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Price</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Deadline</th>
+                                <th style="color: #000000 !important; font-weight: 600;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for client in clients %}
+                            <tr>
+                                <td style="color: var(--text-light) !important;">{{ loop.index }}</td>
+                                <td>
+                                    <div>
+                                        <strong style="color: var(--primary-gold) !important;">{{ client.name }}</strong>
+                                        {% if client.company %}
+                                        <br><small style="color: rgba(255,255,255,0.7) !important;">{{ client.company }}</small>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="font-size: 0.875rem;">
+                                        <div>
+                                            <i class="fas fa-envelope me-1" style="color: var(--primary-gold);"></i>
+                                            <a href="mailto:{{ client.email }}" style="color: #60a5fa !important;">{{ client.email }}</a>
+                                        </div>
+                                        {% if client.phone %}
+                                        <div class="mt-1">
+                                            <i class="fas fa-phone me-1" style="color: var(--primary-gold);"></i>
+                                            <span style="color: var(--text-light) !important;">{{ client.phone }}</span>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if client.project_title %}
+                                    <strong style="color: var(--text-light) !important;">{{ client.project_title }}</strong>
+                                    {% else %}
+                                    <span style="color: rgba(255,255,255,0.5) !important;">No project title</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if client.status == 'lead' %}
+                                    <span class="badge" style="background: #f59e0b; color: #ffffff;">
+                                        <i class="fas fa-flag me-1"></i>Lead
+                                    </span>
+                                    {% elif client.status == 'negotiation' %}
+                                    <span class="badge" style="background: #3b82f6; color: #ffffff;">
+                                        <i class="fas fa-comments me-1"></i>Negotiation
+                                    </span>
+                                    {% elif client.status == 'in-progress' %}
+                                    <span class="badge" style="background: #10b981; color: #ffffff;">
+                                        <i class="fas fa-spinner fa-spin me-1"></i>In Progress
+                                    </span>
+                                    {% elif client.status == 'delivered' %}
+                                    <span class="badge" style="background: #8b5cf6; color: #ffffff;">
+                                        <i class="fas fa-check-circle me-1"></i>Delivered
+                                    </span>
+                                    {% else %}
+                                    <span class="badge" style="background: #6b7280; color: #ffffff;">
+                                        <i class="fas fa-question-circle me-1"></i>Unknown
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if client.price %}
+                                    <strong style="color: #10b981 !important;">${{ client.price }}</strong>
+                                    {% else %}
+                                    <span style="color: rgba(255,255,255,0.5) !important;">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if client.deadline %}
+                                    <small style="color: var(--text-light) !important;">{{ client.deadline }}</small>
+                                    {% else %}
+                                    <span style="color: rgba(255,255,255,0.5) !important;">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ url_for('dashboard_view_client', client_id=client.id) }}" 
+                                           class="btn btn-outline-primary btn-sm" 
+                                           title="View Details">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ url_for('dashboard_edit_client', client_id=client.id) }}" 
+                                           class="btn btn-outline-success btn-sm" 
+                                           title="Edit Client">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="mailto:{{ client.email }}" 
+                                           class="btn btn-outline-info btn-sm" 
+                                           title="Send Email">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                        <a href="{{ url_for('dashboard_delete_client', client_id=client.id) }}" 
+                                           class="btn btn-outline-danger btn-sm" 
+                                           onclick="return confirm('Are you sure you want to delete this client?')" 
+                                           title="Delete Client">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center text-muted py-5">
+                    <i class="fas fa-users fa-3x mb-3 opacity-50"></i>
+                    <h5>No Clients Yet</h5>
+                    <p>Start by adding your first client or convert a message into a client.</p>
+                    <a href="{{ url_for('dashboard_add_client') }}" class="btn btn-primary mt-3">
+                        <i class="fas fa-plus me-2"></i>Add First Client
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Stats Summary -->
+{% if clients %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-pie me-2"></i>Quick Summary
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 style="color: var(--primary-gold);">Project Status Distribution</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-circle" style="color: #10b981;"></i> Active: {{ stats.active }} projects</li>
+                            <li><i class="fas fa-circle" style="color: #3b82f6;"></i> Pending: {{ stats.pending }} projects</li>
+                            <li><i class="fas fa-circle" style="color: #8b5cf6;"></i> Completed: {{ stats.completed }} projects</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 style="color: var(--primary-gold);">Financial Overview</h6>
+                        <p>Total Revenue: <strong style="color: #10b981;">${{ "%.2f"|format(stats.revenue) }}</strong></p>
+                        <p>Total Clients: <strong>{{ stats.total }}</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
