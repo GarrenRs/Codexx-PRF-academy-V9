@@ -29,3 +29,12 @@ sqlalchemy
 weasyprint
 Werkzeug
 apscheduler
+apscheduler
+email-validator
+flask
+flask-dance
+flask-login
+flask-sqlalchemy
+gunicorn
+psycopg2-binary
+weasyprint

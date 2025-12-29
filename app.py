@@ -711,8 +711,8 @@ def send_telegram_notification_async(message_text, username=None):
         thread.start()
 
 
-def save_message(name, email, message, username=None):
-    """Save contact message per user and send notifications"""
+def save_message(name, email, message, username=None, priority='normal'):
+    """Save contact message per user and send notifications with priority"""
     if username is None:
         # Try to get from session, otherwise default to admin
         username = session.get('username')
@@ -736,7 +736,9 @@ def save_message(name, email, message, username=None):
         'date': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
         'read': False,
         'ip': client_ip,
-        'recipient': username  # Store which user received this message
+        'recipient': username,  # Store which user received this message
+        'priority': priority,  # Add priority field (high, normal, low)
+        'category': 'general'  # Default category for future filtering
     }
 
     data['messages'].append(new_message)
@@ -939,6 +941,70 @@ def catalog():
     return render_template('catalog.html')
 
 
+def send_confirmation_email(name, email, portfolio_owner_email):
+    """Send confirmation email to visitor"""
+    try:
+        subject = "Message Received - We'll Be In Touch Soon"
+        html_body = f"""
+        <div style="font-family: 'Poppins', sans-serif; max-width: 600px; margin: 0 auto; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 0; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+            <div style="background: white; padding: 40px;">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #333; margin: 0; font-size: 28px;">✓ Message Received</h2>
+                </div>
+                
+                <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                    Hello <strong>{name}</strong>,
+                </p>
+                
+                <p style="color: #555; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
+                    Thank you for reaching out! We've received your message and appreciate you taking the time to contact us.
+                </p>
+                
+                <div style="background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 25px 0; border-radius: 5px;">
+                    <p style="color: #666; font-size: 14px; margin: 0;">
+                        <strong>What happens next?</strong><br>
+                        Our team will review your message and get back to you as soon as possible at <strong>{email}</strong>. We typically respond within 24 hours.
+                    </p>
+                </div>
+                
+                <p style="color: #666; font-size: 14px; line-height: 1.6; margin: 0 0 20px 0;">
+                    If you have any additional information to add, feel free to reply to this email directly.
+                </p>
+                
+                <div style="text-align: center; margin-top: 30px; border-top: 1px solid #eee; padding-top: 20px;">
+                    <p style="color: #999; font-size: 12px; margin: 0;">
+                        © 2026 Codexx. All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+        """
+        
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = subject
+        msg['From'] = portfolio_owner_email or 'noreply@codexx.com'
+        msg['To'] = email
+        msg.attach(MIMEText(html_body, 'html'))
+        
+        # Try to send via SMTP if configured, otherwise skip
+        try:
+            smtp_config = load_smtp_config()
+            if all([smtp_config.get('host'), smtp_config.get('port'), 
+                    smtp_config.get('email'), smtp_config.get('password')]):
+                with smtplib.SMTP(smtp_config.get('host'), int(smtp_config.get('port'))) as server:
+                    server.starttls()
+                    server.login(smtp_config.get('email'), smtp_config.get('password'))
+                    server.send_message(msg)
+                return True
+        except Exception as e:
+            app.logger.debug(f"Could not send confirmation email via SMTP: {str(e)}")
+        
+        return False
+    except Exception as e:
+        app.logger.error(f"Error preparing confirmation email: {str(e)}")
+        return False
+
+
 @app.route('/contact', methods=['POST'])
 def contact():
     """Handle contact form submission with security"""
@@ -978,11 +1044,20 @@ def contact():
             if not portfolio_owner:
                 portfolio_owner = ADMIN_CREDENTIALS['username']
             
+            # Get portfolio owner's email for confirmation email
+            owner_data = load_data(username=portfolio_owner)
+            owner_email = owner_data.get('contact', {}).get('email', 'support@codexx.com')
+            
             # Save message to the correct portfolio owner
             # Note: save_message() handles both Telegram and email notifications
             save_message(name, email, message, username=portfolio_owner)
             
-            flash('Thank you for your message! I will get back to you soon.',
+            # Send confirmation email to visitor (async for better UX)
+            thread = threading.Thread(target=send_confirmation_email, args=(name, email, owner_email))
+            thread.daemon = True
+            thread.start()
+            
+            flash('Thank you for your message! I will get back to you soon. Check your email for confirmation.',
                   'success')
         except Exception as e:
             app.logger.error(f"Contact form error: {str(e)}")
@@ -1829,13 +1904,33 @@ def dashboard_social():
 @login_required
 @disable_in_demo
 def dashboard_messages():
-    """List all messages for current user"""
+    """List all messages for current user with priority filtering"""
     username = session.get('username')
     data = load_data(username=username)
-    messages = sorted(data.get('messages', []),
-                      key=lambda x: x.get('date', ''),
-                      reverse=True)
-    return render_template('dashboard/messages.html', messages=messages)
+    all_messages = data.get('messages', [])
+    
+    # Get priority filter from query parameter
+    priority_filter = request.args.get('priority', 'all')
+    
+    # Filter by priority if specified
+    if priority_filter != 'all':
+        messages = [m for m in all_messages if m.get('priority', 'normal') == priority_filter]
+    else:
+        messages = all_messages
+    
+    # Sort by date descending
+    messages = sorted(messages, key=lambda x: x.get('date', ''), reverse=True)
+    
+    # Calculate priority counts for dashboard
+    priority_stats = {
+        'high': len([m for m in all_messages if m.get('priority') == 'high']),
+        'normal': len([m for m in all_messages if m.get('priority', 'normal') == 'normal']),
+        'low': len([m for m in all_messages if m.get('priority') == 'low']),
+        'total': len(all_messages)
+    }
+    
+    return render_template('dashboard/messages.html', messages=messages, 
+                         priority_filter=priority_filter, priority_stats=priority_stats)
 
 
 @app.route('/dashboard/messages/view/<int:message_id>')

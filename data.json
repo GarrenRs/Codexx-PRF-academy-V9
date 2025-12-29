@@ -1,210 +1,37 @@
 {
-  "name": "Demo Portfolio - Codexx",
-  "title": "Web Developer & Designer",
-  "description": "Experience the power of Codexx Portfolio Platform with this interactive demo",
-  "photo": "static/assets/profile-placeholder.svg",
-  "about": "Welcome to the Codexx Portfolio Platform! This is a live demo showcasing all the features available in our professional portfolio management system. Feel free to explore and customize this demo to see how your portfolio would look.",
-  "skills": [
-    {
-      "name": "Web Development",
-      "level": 90
-    },
-    {
-      "name": "UI/UX Design",
-      "level": 85
-    },
-    {
-      "name": "JavaScript",
-      "level": 88
-    },
-    {
-      "name": "React.js",
-      "level": 85
-    },
-    {
-      "name": "Python",
-      "level": 80
-    }
-  ],
-  "projects": [],
-  "contact": {
-    "email": "demo@codexx.com",
-    "phone": "+1 234 567 8900",
-    "location": "San Francisco, CA"
-  },
-  "social": {},
-  "messages": [],
-  "visitors": {
-    "total": 0,
-    "today": [],
-    "unique_ips": []
-  },
-  "settings": {
-    "theme": "luxury-gold"
-  },
-  "clients": [],
   "users": [
     {
       "id": 1,
-      "username": "Codexx",
-      "password_hash": "scrypt:32768:8:1$iSGEyXFxrJsDqvfl$1ff575912e9069904184df3aa548eb539be59ee3f6b9ed44bd68c462ed677b2439bbfdf299121580b3aaf795e4a41fc9c22c02eb36551de73c2db054c8c6e3e1",
-      "email": "raesondark@gmail.com",
+      "username": "admin",
+      "password_hash": "scrypt:32768:8:1$vsiOQ0T6Wt4kwOfC$8c00e11c7ecbe7a165e315c12d83876790669fb0293aef7447c385bf4b735196df2a4f293c777133c9e631a4cdd0e9f45cd37a240d451ce399e1b74e0472beca",
+      "email": "raesonrs@gmail.com",
       "role": "user",
-      "is_demo": true,
-      "created_at": "2025-12-29 20:01:04"
+      "is_demo": false,
+      "created_at": "2025-12-29 21:49:21"
     }
   ],
   "portfolios": {
-    "Codexx": {
-      "name": "Codexx",
-      "title": "Web Developer & Designer",
-      "description": "Welcome to my professional portfolio.",
-      "skills": [],
-      "projects": [],
-      "settings": {
-        "theme": "modern-dark"
-      },
-      "clients": [
-        {
-          "id": 1,
-          "name": "COEXX",
-          "email": "codexxrs@outlook.sa",
-          "phone": "",
-          "company": "",
-          "project_title": "",
-          "project_description": "poisudfiu isofiu sifui suf",
-          "status": "lead",
-          "price": "",
-          "deadline": "",
-          "start_date": "2025-12-29",
-          "notes": "",
-          "created_at": "2025-12-29 20:31:38"
-        }
-      ],
-      "notifications": {
-        "telegram": {
-          "bot_token": "8223882654:AAGDVWEZUfLwbDI0lTlTs7sBwbBgORHarIc",
-          "chat_id": "5464520756",
-          "configured_at": "2025-12-29 20:17:35"
-        }
-      },
-      "visitors": {
-        "total": 5,
-        "today": [
-          {
-            "ip": "105.235.129.25, 10.83.10.189",
-            "timestamp": "2025-12-29 20:17:52",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.10.189",
-            "timestamp": "2025-12-29 20:19:30",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.8.56",
-            "timestamp": "2025-12-29 20:19:53",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.10.189",
-            "timestamp": "2025-12-29 20:20:12",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.11.89",
-            "timestamp": "2025-12-29 20:20:32",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.10.189",
-            "timestamp": "2025-12-29 20:23:57",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.6.240",
-            "timestamp": "2025-12-29 20:24:13",
-            "date": "2025-12-29"
-          },
-          {
-            "ip": "105.235.129.25, 10.83.5.121",
-            "timestamp": "2025-12-29 20:36:07",
-            "date": "2025-12-29"
-          }
-        ],
-        "unique_ips": [
-          "105.235.129.25, 10.83.8.56",
-          "105.235.129.25, 10.83.6.240",
-          "105.235.129.25, 10.83.10.189",
-          "105.235.129.25, 10.83.5.121",
-          "105.235.129.25, 10.83.11.89"
-        ]
-      },
-      "messages": [
-        {
-          "id": 1,
-          "name": "Dark Raeson",
-          "email": "raesondark@gmail.com",
-          "message": "ALDKJLkJDKQSJDKKJQLJjqksjdkj",
-          "date": "2025-12-29 20:18:10",
-          "read": true,
-          "ip": "105.235.129.25, 10.83.10.189",
-          "recipient": "Codexx"
-        },
-        {
-          "id": 2,
-          "name": "COE",
-          "email": "codexxrs@outlook.sa",
-          "message": "poisudfiu isofiu sifui suf",
-          "date": "2025-12-29 20:20:54",
-          "read": false,
-          "ip": "105.235.129.25, 10.83.3.11",
-          "recipient": "Codexx"
-        },
-        {
-          "id": 3,
-          "name": "COEXX",
-          "email": "codexxrs@outlook.sa",
-          "message": "poisudfiu isofiu sifui suf",
-          "date": "2025-12-29 20:24:28",
-          "read": false,
-          "ip": "105.235.129.25, 10.83.3.11",
-          "recipient": "Codexx"
-        },
-        {
-          "id": 4,
-          "name": "Minou",
-          "email": "loyej41389@m3player.com",
-          "message": "ض\"قفثضصقفكمنقف",
-          "date": "2025-12-29 20:32:17",
-          "read": false,
-          "ip": "105.235.129.25, 10.83.2.115",
-          "recipient": "Codexx"
-        }
-      ]
-    },
     "admin": {
       "name": "admin",
       "title": "Web Developer & Designer",
       "description": "Welcome to my professional portfolio.",
       "skills": [],
       "projects": [],
-      "messages": [],
-      "clients": [],
       "settings": {
         "theme": "luxury-gold"
       },
       "visitors": {
-        "total": 0,
-        "today": [],
-        "unique_ips": []
-      },
-      "notifications": {
-        "telegram": {
-          "bot_token": "8223882654:AAGDVWEZUfLwbDI0lTlTs7sBwbBgORHarIc",
-          "chat_id": "5464520756",
-          "configured_at": "2025-12-29 20:16:56"
-        }
+        "total": 1,
+        "today": [
+          {
+            "ip": "105.235.128.15, 10.82.2.182",
+            "timestamp": "2025-12-29 21:50:23",
+            "date": "2025-12-29"
+          }
+        ],
+        "unique_ips": [
+          "105.235.128.15, 10.82.2.182"
+        ]
       }
     }
   }
